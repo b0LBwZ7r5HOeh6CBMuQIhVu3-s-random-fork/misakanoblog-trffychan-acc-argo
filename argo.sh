@@ -108,22 +108,22 @@ listTunnel() {
 }
 
 makeTunnel() {
-	read -rp "请输入需要创建的隧道名称：" tunnelName
+	read -rp "请设置隧道名称：" tunnelName
 	cloudflared tunnel create $tunnelName
-	read -rp "请输入域名：" tunnelDomain
+	read -rp "请设置隧道域名：" tunnelDomain
 	cloudflared tunnel route dns $tunnelName $tunnelDomain
 	cloudflared tunnel list
 	# 感谢yuuki410在其分支中提取隧道UUID的代码
 	# Source: https://github.com/yuuki410/argo-tunnel-script
 	tunnelUUID=$( $(cloudflared tunnel list | grep $tunnelName) = /[0-9a-f\-]+/)
 	read -p "请输入隧道UUID（复制ID里面的内容）：" tunnelUUID
-	read -p "请输入传输协议（默认http）：" tunnelProtocol
+	read -p "输入传输协议（默认http）：" tunnelProtocol
 	[[ -z $tunnelProtocol ]] && tunnelProtocol="http"
-	read -p "请输入反代端口（默认80）：" tunnelPort
+	read -p "输入反代端口（默认80）：" tunnelPort
 	[[ -z $tunnelPort ]] && tunnelPort=80
-	read -p "请输入保存的配置文件名（默认：$tunnelFileName）：" tunnelFileName
-	[[ -z $tunnelFileName ]] && tunnelFileName = $tunnelName
-	cat <<EOF > ~/$tunnelFileName.yml
+	read -p "输入保存的配置文件名 [默认随机文件名]：" tunnelFileName
+	[[ -z $tunnelFileName ]] && tunnelFileName = $(openssl rand -hex 16)
+	cat <<EOF > /root/$tunnelFileName.yml
 tunnel: $tunnelName
 credentials-file: /root/.cloudflared/$tunnelUUID.json
 originRequest:
