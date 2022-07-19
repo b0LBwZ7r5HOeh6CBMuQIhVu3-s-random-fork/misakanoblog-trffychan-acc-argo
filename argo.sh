@@ -24,9 +24,6 @@ PACKAGE_UPDATE=("apt -y update" "apt -y update" "yum -y update" "yum -y update")
 PACKAGE_INSTALL=("apt -y install" "apt -y install" "yum -y install" "yum -y install" "apk add -f")
 PACKAGE_REMOVE=("apt -y remove" "apt -y remove" "yum -y remove" "yum -y remove")
 
-# 判断系统CPU架构
-cpuArch=$(uname -m)
-
 # 判断是否为root用户
 [[ $EUID -ne 0 ]] && yellow "请在root用户下运行脚本" && exit 1
 
@@ -50,7 +47,7 @@ TODAY=$(expr "$COUNT" : '.*\s\([0-9]\{1,\}\)\s/.*')
 TOTAL=$(expr "$COUNT" : '.*/\s\([0-9]\{1,\}\)\s.*')
 
 archAffix() {
-	case "$cpuArch" in
+	case "$(uname -m)" in
 		i686 | i386) cpuArch='386' ;;
 		x86_64 | amd64) cpuArch='amd64' ;;
 		armv5tel | arm6l | armv7 | armv7l) cpuArch='arm' ;;
