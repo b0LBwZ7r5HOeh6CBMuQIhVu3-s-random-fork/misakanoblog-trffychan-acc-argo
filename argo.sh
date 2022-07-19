@@ -189,7 +189,7 @@ menu() {
 	echo -e " ${GREEN}2.${PLAIN} 登录 CloudFlare Argo Tunnel"
 	echo -e " ${GREEN}3.${PLAIN} ${RED}卸载 CloudFlare Argo Tunnel${PLAIN}"
 	echo " -------------"
-	echo -e " ${GREEN}4.${PLAIN} 查看账户内 Argo Tunnel 列表"
+	echo -e " ${GREEN}4.${PLAIN} 查看账户内 Argo Tunnel 隧道列表"
 	echo " -------------"
 	echo -e " ${GREEN}5.${PLAIN} 创建 Argo Tunnel 隧道"
 	echo -e " ${GREEN}6.${PLAIN} 运行 Argo Tunnel 隧道"
