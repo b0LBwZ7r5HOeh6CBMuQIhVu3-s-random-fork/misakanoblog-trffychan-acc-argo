@@ -40,7 +40,7 @@ for ((int = 0; int < ${#REGEX[@]}; int++)); do
 	[[ $(echo "$SYS" | tr '[:upper:]' '[:lower:]') =~ ${REGEX[int]} ]] && SYSTEM="${RELEASE[int]}" && [[ -n $SYSTEM ]] && break
 done
 
-[[ -z $SYSTEM ]] && red "不支持VPS的当前系统，请使用主流的操作系统" && exit 1
+[[ -z $SYSTEM ]] && red "不支持当前VPS的操作系统，请使用主流的操作系统" && exit 1
 [[ -z $(type -P curl) ]] && ${PACKAGE_UPDATE[int} && ${PACKAGE_INSTALL[int]} curl
 
 archAffix() {
@@ -55,7 +55,7 @@ archAffix() {
 
 back2menu() {
 	green "所选操作执行完成"
-	read -p "请输入“y”退出，或按任意键回到主菜单：" back2menuInput
+	read -rp "请输入“y”退出，或按任意键回到主菜单：" back2menuInput
 	case "$back2menuInput" in
 		y) exit 1 ;;
 		*) menu ;;
@@ -103,9 +103,9 @@ listTunnel() {
 }
 
 makeTunnel() {
-	read -p "请输入需要创建的隧道名称：" tunnelName
+	read -rp "请输入需要创建的隧道名称：" tunnelName
 	cloudflared tunnel create $tunnelName
-	read -p "请输入域名：" tunnelDomain
+	read -rp "请输入域名：" tunnelDomain
 	cloudflared tunnel route dns $tunnelName $tunnelDomain
 	cloudflared tunnel list
 	# 感谢yuuki410在其分支中提取隧道UUID的代码
@@ -137,8 +137,8 @@ runTunnel() {
 	[[ $cloudflaredStatus == "未安装" ]] && red "检测到未安装CloudFlare Argo Tunnel客户端，无法执行操作！！！" && exit 1
 	[[ $loginStatus == "未登录" ]] && red "请登录CloudFlare Argo Tunnel客户端后再执行操作！！！" && exit 1
 	[[ -z $(type -P screen) ]] && ${PACKAGE_UPDATE[int]} && ${PACKAGE_INSTALL[int]} screen
-	read -p "请复制粘贴配置文件的位置（例：/root/tunnel.yml）：" ymlLocation
-	read -p "请输入创建Screen会话的名字：" screenName
+	read -rp "请复制粘贴配置文件的位置（例：/root/tunnel.yml）：" ymlLocation
+	read -rp "请输入创建Screen会话的名字：" screenName
 	screen -USdm $screenName cloudflared tunnel --config $ymlLocation run
 	green "隧道已运行成功，请等待1-3分钟启动并解析完毕"
 	back2menu
@@ -148,7 +148,7 @@ killTunnel() {
 	[[ $cloudflaredStatus == "未安装" ]] && red "检测到未安装CloudFlare Argo Tunnel客户端，无法执行操作！！！" && exit 1
 	[[ $loginStatus == "未登录" ]] && red "请登录CloudFlare Argo Tunnel客户端后再执行操作！！！" && exit 1
 	[[ -z $(type -P screen) ]] && ${PACKAGE_UPDATE[int]} && ${PACKAGE_INSTALL[int]} screen
-	read -p "请输入需要删除的Screen会话名字：" screenName
+	read -rp "请输入需要删除的Screen会话名字：" screenName
 	screen -S $screenName -X quit
 	green "Screen会话停止成功！"
 	back2menu
@@ -157,7 +157,7 @@ killTunnel() {
 deleteTunnel() {
 	[[ $cloudflaredStatus == "未安装" ]] && red "检测到未安装CloudFlare Argo Tunnel客户端，无法执行操作！！！" && exit 1
 	[[ $loginStatus == "未登录" ]] && red "请登录CloudFlare Argo Tunnel客户端后再执行操作！！！" && exit 1
-	read -p "请输入需要删除的隧道名称：" tunnelName
+	read -rp "请输入需要删除的隧道名称：" tunnelName
 	cloudflared tunnel delete $tunnelName
 	back2menu
 }
@@ -171,7 +171,7 @@ argoCert() {
 	yellow "证书crt路径如下：/root/cert.crt"
 	yellow "私钥key路径如下：/root/private.key"
 	green "使用证书提示："
-	yellow "1. 当前证书只能使用于CF Argo Tunnel授权过的域名"
+	yellow "1. 当前证书仅限于CF Argo Tunnel隧道授权过的域名使用"
 	yellow "2. 在需要使用证书的服务使用Argo Tunnel的域名，必须使用其证书"
 	back2menu
 }
