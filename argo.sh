@@ -41,11 +41,6 @@ done
 [[ -z $SYSTEM ]] && red "不支持VPS的当前系统，请使用主流的操作系统" && exit 1
 [[ -z $(type -P curl) ]] && ${PACKAGE_UPDATE[int} && ${PACKAGE_INSTALL[int]} curl
 
-## 统计脚本运行次数
-COUNT=$(curl -sm8 "https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fcdn.jsdelivr.net%2Fgh%2FMisaka-blog%2Fargo-tunnel-script%40master%2Fargo.sh&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false" 2>&1) &&
-TODAY=$(expr "$COUNT" : '.*\s\([0-9]\{1,\}\)\s/.*')
-TOTAL=$(expr "$COUNT" : '.*/\s\([0-9]\{1,\}\)\s.*')
-
 archAffix() {
 	case "$(uname -m)" in
 		i686 | i386) cpuArch='386' ;;
@@ -203,7 +198,6 @@ menu() {
 	echo -e " ${GREEN}0.${PLAIN} 退出脚本"
 	echo ""
 	echo -e "CloudFlared 客户端状态：$cloudflaredStatus   账户登录状态：$loginStatus"
-	echo -e "今日运行次数：$TODAY   总共运行次数：$TOTAL"
 	echo ""
 	read -rp "请输入选项 [0-9]: " menuChoice
 	case $menuChoice in
