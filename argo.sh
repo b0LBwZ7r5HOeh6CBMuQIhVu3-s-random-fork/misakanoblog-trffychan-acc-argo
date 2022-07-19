@@ -184,10 +184,8 @@ menu() {
 	clear
 	echo "#############################################################"
 	echo -e "#           ${RED}CloudFlare Argo Tunnel 一键配置脚本${PLAIN}             #"
-	echo -e "# ${GREEN}作者${PLAIN}: Misaka No                                           #"
-	echo -e "# ${GREEN}网址${PLAIN}: https://owo.misaka.rest                             #"
-	echo -e "# ${GREEN}论坛${PLAIN}: https://vpsgo.co                                    #"
-	echo -e "# ${GREEN}TG群${PLAIN}: https://t.me/misakanetcn                            #"
+	echo -e "# ${GREEN}作者${PLAIN}: taffychan                                           #"
+	echo -e "# ${GREEN}GitHub${PLAIN}: https://github.com/taffychan                      #"
 	echo "#############################################################"
 	echo ""
 	echo -e " ${GREEN}1.${PLAIN} 安装 CloudFlare Argo Tunnel"
