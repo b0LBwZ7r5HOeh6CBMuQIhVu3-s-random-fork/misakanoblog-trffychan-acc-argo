@@ -50,10 +50,10 @@ fi
 
 archAffix() {
 	case "$(uname -m)" in
-		i686 | i386) cpuArch='386' ;;
-		x86_64 | amd64) cpuArch='amd64' ;;
-		armv5tel | arm6l | armv7 | armv7l) cpuArch='arm' ;;
-		armv8 | arm64 | aarch64) cpuArch='aarch64' ;;
+		i686 | i386) echo '386' ;;
+		x86_64 | amd64) echo 'amd64' ;;
+		armv5tel | arm6l | armv7 | armv7l) echo 'arm' ;;
+		armv8 | arm64 | aarch64) echo 'aarch64' ;;
 		*) red "不支持的CPU架构！" && exit 1 ;;
 	esac
 }
@@ -76,7 +76,8 @@ checkStatus() {
 
 installCloudFlared() {
 	[[ $cloudflaredStatus == "已安装" ]] && red "检测到已安装并登录CloudFlare Argo Tunnel，无需重复安装！！" && exit 1
-	wget -N --no-check-certificate https://github.com/cloudflare/cloudflared/releases/download/2022.7.1/cloudflared-linux-$cpuArch -O /usr/local/bin/cloudflared
+	last_version=$(curl -Ls "https://api.github.com/repos/cloudflare/cloudflared/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+	wget -N --no-check-certificate https://github.com/cloudflare/cloudflared/releases/download/$last_version/cloudflared-linux-$cpuArch -O /usr/local/bin/cloudflared
 	chmod +x /usr/local/bin/cloudflared
 }
 
