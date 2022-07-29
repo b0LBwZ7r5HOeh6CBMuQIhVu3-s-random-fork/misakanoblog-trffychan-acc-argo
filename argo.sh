@@ -86,10 +86,10 @@ loginCloudFlared(){
 	cloudflared tunnel login
 	checkStatus
 	if [[ $cloudflaredStatus == "未登录" ]]; then
-		red "登录CloudFlare Argo Tunnel失败！！"
+		red "登录CloudFlare Argo Tunnel账户失败！！"
 		back2menu
 	else
-		green "登录CloudFlare Argo Tunnel成功！！"
+		green "登录CloudFlare Argo Tunnel账户成功！！"
 		back2menu
 	fi
 }
